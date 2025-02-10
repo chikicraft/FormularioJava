@@ -22,7 +22,7 @@ public class FrmEstadistica extends JFrame{
 
     public FrmEstadistica(){
 
-        setSize(600,300);
+        setSize(500,300);
         setTitle("Formularion");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
