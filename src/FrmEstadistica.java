@@ -41,11 +41,13 @@ public class FrmEstadistica extends JFrame{
 
     public FrmEstadistica (){
 
+        //Opciones de ventana
         setSize (500,300);
         setTitle("Estadistica");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
         
+        //aqui se crean los campos de texto
         txtDato=new JTextField();
         txtDato.setBounds(110, 10, 100, 25);
         getContentPane().add(txtDato);
@@ -53,7 +55,8 @@ public class FrmEstadistica extends JFrame{
         txtEstadistica=new JTextField();
         txtEstadistica.setBounds(270, 210, 130, 25);
         getContentPane().add(txtEstadistica);
-        
+
+        //aqui se crean los textos
         JLabel lblDato=new JLabel("Dato");
         lblDato.setBounds(45, 10, 100, 25);
         getContentPane().add(lblDato);
@@ -62,6 +65,7 @@ public class FrmEstadistica extends JFrame{
         lblDatos.setBounds(312, 10, 210, 25);
         getContentPane().add(lblDatos);
 
+        //aqui se crean los botones
         JButton btnAgregar=new JButton("Agregar");
         btnAgregar.setBorder(new RoundedBorder(10));
         btnAgregar.setBounds(110, 50, 100, 25);
@@ -77,11 +81,13 @@ public class FrmEstadistica extends JFrame{
         btnEstadistica.setBounds(100, 170, 110, 25);
         getContentPane().add(btnEstadistica);
 
+        //aqui se crean los listados
         lstMuestra=new JList();
         JScrollPane spMuestra=new JScrollPane(lstMuestra);
         spMuestra.setBounds(285, 40, 100, 150);
         getContentPane().add(spMuestra);
 
+        //aqui se crean los combobox
         cmbEstadistica=new JComboBox();
         String[] opciones=new String[]{"Sumatoria", "Promedio", "Desviacion", "Maximo", "Minimo", "Moda"}; 
         DefaultComboBoxModel mdlEstadistica=new DefaultComboBoxModel(opciones);
@@ -89,7 +95,7 @@ public class FrmEstadistica extends JFrame{
         cmbEstadistica.setBounds(80, 210, 160, 25);
         getContentPane().add(cmbEstadistica);
 
-
+        //aqui se crean los eventos
         btnAgregar.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent ae){
                 agregarDato();
@@ -112,6 +118,7 @@ public class FrmEstadistica extends JFrame{
     private double[] muestra=new double[1000];
     private int totalDatos = -1;
 
+    //aqui se crean los metodos
     private void agregarDato(){
         try{
         double dato=Double.parseDouble(txtDato.getText());
@@ -159,7 +166,7 @@ public class FrmEstadistica extends JFrame{
         }
         return suma;
     }
-
+    
     private void calcularEstadistica(){
         switch (cmbEstadistica.getSelectedIndex()) {
             case 0:
