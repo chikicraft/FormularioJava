@@ -1,5 +1,10 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.Insets;
+
+//bibliotecas del proyecto, tambien se puede hacer con import javax.swing.*;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -11,11 +16,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListModel;
 import javax.swing.WindowConstants;
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Insets;
 import javax.swing.border.Border;
 
+
+//clase para redondear los botones
 class RoundedBorder implements Border {
     private int radius;
     RoundedBorder(int radius) {
@@ -32,8 +36,10 @@ class RoundedBorder implements Border {
     }
 }
 
+//clase principal
 public class FrmEstadistica extends JFrame{
 
+    //aqui se crean los componentes
     JTextField txtDato;
     JList lstMuestra;
     JTextField txtEstadistica;
@@ -166,11 +172,110 @@ public class FrmEstadistica extends JFrame{
         }
         return suma;
     }
+
+    private double promedio(){
+        double promedioCalculado = 0;
+        if(totalDatos >= 0){
+            promedioCalculado = sumatoria() / (totalDatos + 1);
+        }
+        return promedioCalculado;
+    }
     
+    private double desviacion(){
+        double desviacionCalculada = 0;
+        if(totalDatos >= 0){
+            double promedio = promedio();
+            double sumatoria = 0;
+            for(int i = 0; i <= totalDatos; i++){
+                sumatoria += (muestra[i] - promedio) * (muestra[i] - promedio);
+            }
+            double varianza = sumatoria / (totalDatos + 1);
+            desviacionCalculada = raizCuadrada(varianza);
+        }
+        return desviacionCalculada;
+    }
+    private double raizCuadrada(double numero) {
+        if (numero == 0) return 0;
+        double estimacion = numero;
+        double precision = 1e-10;
+        while (Math.abs(estimacion * estimacion - numero) > precision) {
+            estimacion = (estimacion + numero / estimacion) / 2;
+        }
+        return estimacion;
+    }
+
+    private double maximo(){
+        double maximo = 0;
+        if(totalDatos >= 0){
+            maximo = muestra[0];
+            for(int i = 1; i <= totalDatos; i++){
+                if(muestra[i] > maximo){
+                    maximo = muestra[i];
+                }
+            }
+        }
+        return maximo;
+    }
+
+    private double minimo(){
+        double minimo = 0;
+        if(totalDatos >= 0){
+            minimo = muestra[0];
+            for(int i = 1; i <= totalDatos; i++){
+                if(muestra[i] < minimo){
+                    minimo = muestra[i];
+                }
+            }
+        }
+        return minimo;
+    }
+
+    private double moda(){
+        double moda = 0;
+        if(totalDatos >= 0){
+            int[] frecuencias = new int[totalDatos + 1];
+            for(int i = 0; i <= totalDatos; i++){
+                for(int j = 0; j <= totalDatos; j++){
+                    if(muestra[i] == muestra[j]){
+                        frecuencias[i]++;
+                    }
+                }
+            }
+            int maximoFrecuencia = 0;
+            for(int i = 0; i <= totalDatos; i++){
+                if(frecuencias[i] > maximoFrecuencia){
+                    moda = muestra[i];
+                    maximoFrecuencia = frecuencias[i];
+                }
+            }
+        }
+        return moda;
+    }
+
     private void calcularEstadistica(){
         switch (cmbEstadistica.getSelectedIndex()) {
             case 0:
                 txtEstadistica.setText(String.valueOf(sumatoria()));
+                break;
+            
+            case 1:
+                txtEstadistica.setText(String.valueOf(promedio()));
+                break;
+
+            case 2:
+                txtEstadistica.setText(String.valueOf(desviacion()));
+                break;
+            
+            case 3:
+                txtEstadistica.setText(String.valueOf(maximo()));
+                break;
+            
+            case 4:
+                txtEstadistica.setText(String.valueOf(minimo()));
+                break;
+
+            case 5:
+                txtEstadistica.setText(String.valueOf(moda()));
                 break;
         
             default:
